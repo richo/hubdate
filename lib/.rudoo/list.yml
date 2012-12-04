@@ -1,0 +1,10 @@
+---
+!binary "MDQxMDIz": !ruby/object:Rudoo::Task
+  todo: Upload initial commit
+  priority: 0
+!binary "YzBhYTZi": !ruby/object:Rudoo::Task
+  todo: Gemify program
+  priority: 0
+!binary "ODgxNDMw": !ruby/object:Rudoo::Task
+  todo: Add executable
+  priority: 0

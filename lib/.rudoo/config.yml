@@ -1,0 +1,4 @@
+---
+:person_token: ! '@'
+:tag_token: ^
+:project_token: ! '*'
