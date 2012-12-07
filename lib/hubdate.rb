@@ -23,7 +23,7 @@ else
   Storage.generate_watch if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "watchers.yaml"))
 end
 
-connection = Github::Connection.new()
+connection = Github::Connection.new({:user => "tommyschaefer", :pass => "43v364591226"})
 
 loop do
   Checker.check_notifications(connection)

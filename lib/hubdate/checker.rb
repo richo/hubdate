@@ -23,7 +23,11 @@ class Checker
       new_gazers = {}
 
       watchers.each do |repo, gazers|
-        added = (gazers - file_watchers[repo]).to_a.flatten
+        begin
+          added = (gazers - file_watchers[repo])
+        rescue
+          added = []
+        end
 
         new_gazers[repo] = added
       end
@@ -58,8 +62,12 @@ class Checker
     end
 
     if file_followers != followers 
-      added = (followers - file_followers).to_a
-
+      begin
+        added = (followers - file_followers)
+      rescue
+        added = []
+      end
+      
       added.each do |login|
         TerminalNotifier.notify("", :title => 'New Follower!', :subtitle => "#{login} is now following you!")
       end
