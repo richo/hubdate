@@ -13,13 +13,17 @@ require 'fileutils'
   require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", file))
 end
 
+def hubdate_dotfile(*paths)
+  File.join(*[Dir.home, ".hubdate"] + paths)
+end
+
 def run(user, password, time)
-  if !Storage.dir_initialized?(File.join(Dir.home, ".hubdate"))
+  if !Storage.dir_initialized?(hubdate_dotfile)
     Storage.generate_files
   else
-    Storage.generate_follow if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "followers.yaml"))
-    Storage.generate_star if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "stargazers.yaml"))
-    Storage.generate_watch if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "watchers.yaml"))
+    Storage.generate_follow if !Storage.file_initialized?(hubdate_dotfile("followers.yaml"))
+    Storage.generate_star if !Storage.file_initialized?(hubdate_dotfile("stargazers.yaml"))
+    Storage.generate_watch if !Storage.file_initialized?(hubdate_dotfile("watchers.yaml"))
   end
 
   connection = Github::Connection.new({:user => user, :pass => password})
