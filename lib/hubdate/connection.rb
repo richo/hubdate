@@ -2,11 +2,11 @@ class Github
   class Connection
     attr_accessor :user # Allows us to call for the connections user later
     attr_reader :pass, :token
-   
+
     # Check for argument errors and format credentials
     def initialize(args={})
       raise ArgumentError.new("Github::Connection does not take any arguments of type #{args.class}.") unless args.is_a?(Hash)
-      
+
       args.keys.each do |key|
         raise ArgumentError.new("Unknown option '#{key}'.") unless [:user, :pass, :token].include? key
       end
@@ -46,7 +46,7 @@ class Github
         false
       end
     end
-    
+
     # Send HTTP Get request
     def get(path, params = {}, creds = @creds, server = @server)
       path = linkPath(path, params) if params != {}
@@ -62,7 +62,7 @@ class Github
 
     def post(path, params={}, creds = @creds, server = @server)
       path = linkPath(path, params, creds[:token]) if params != {} && creds.keys.include?(:token)
-      
+
       http = Net::HTTP.new(server, 443)
       req = Net::HTTP::Post.new(path)
       http.use_ssl = true

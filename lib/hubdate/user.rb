@@ -12,7 +12,7 @@ class Github
       else
         responseHash = conn.get("/users/#{user}")
       end
-      
+
       new(responseHash, conn)
     end
 

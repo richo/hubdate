@@ -29,7 +29,7 @@ class Storage
     else
       return false
     end
-  end  
+  end
 
   def self.file_initialized?(file)
     if File.exists?(file)
@@ -37,7 +37,7 @@ class Storage
     else
       return false
     end
-  end  
+  end
 
   def self.generate_follow
     Storage.make_file(File.join(Dir.home, ".hubdate") , "followers.yaml")
@@ -57,5 +57,5 @@ class Storage
     self.generate_follow
     self.generate_star
     self.generate_watch
-  end 
+  end
 end

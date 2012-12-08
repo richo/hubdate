@@ -19,7 +19,7 @@ class Checker
       Storage.write_file(watchers, watchers_file)
     end
 
-    if file_watchers != watchers 
+    if file_watchers != watchers
       new_gazers = {}
 
       watchers.each do |repo, gazers|
@@ -52,7 +52,7 @@ class Checker
 
   def self.check_followers(connection)
     followers_file = File.join(Dir.home, ".hubdate", "followers.yaml")
-    
+
     followers = Github::User.fetch(connection).followers.map {|follower| follower.login}
 
     begin
@@ -61,13 +61,13 @@ class Checker
       Storage.write_file(followers, followers_file)
     end
 
-    if file_followers != followers 
+    if file_followers != followers
       begin
         added = (followers - file_followers)
       rescue
         added = []
       end
-      
+
       added.each do |login|
         TerminalNotifier.notify("", :title => 'New Follower!', :subtitle => "#{login} is now following you!")
       end
