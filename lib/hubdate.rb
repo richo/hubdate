@@ -7,13 +7,11 @@ require 'net/http'
 require 'net/https'
 require 'fileutils'
 
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "base"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "user"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "repository"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "notification"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "connection"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "storage"))
-require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "checker"))
+%w[
+  base user repository notification connection storage  checker
+].each do |file|
+  require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", file))
+end
 
 def run(user, password, time)
   if !Storage.dir_initialized?(File.join(Dir.home, ".hubdate"))
