@@ -8,6 +8,7 @@
 !binary "ODgxNDMw": !ruby/object:Rudoo::Task
   todo: Add executable
   priority: 0
-!binary "NWFmNmFh": !ruby/object:Rudoo::Task
-  todo: Fix bug that occurs when creating file system for the first time. :wkng
+!binary "YTg3NWJj": !ruby/object:Rudoo::Task
+  todo: Fix bug that occurs when creating files for the first time and move execution
+    into executable :wkng
   priority: 0

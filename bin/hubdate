@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'hubdate.rb'))
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: rd COMMAND [OPTIONS]"
+  opt.separator  ""
+  opt.separator  "Commands"
+  opt.separator  "     init: initialize a new rudoo file architecture"
+  opt.separator  ""
+  opt.separator  "Options"
+
+  opt.on("-u", "--username USERNAME", "username of the github account you would like to monitor") do |username|
+    options[:username] = username
+  end
+
+  opt.on("-p", "--password PASSWORD", "password for the github account you would like to monitor") do |password|
+    options[:password] = password
+  end
+
+  opt.on("-t", "--time TIME", "time you would like to wait between polls (Minimum of 70s)") do |time|
+    options[:time] = time
+  end
+end
+
+opt_parser.parse!
+
+username = options[:username] || nil
+password = options[:password] || nil
+time = options[:time] || 70
+
+if username.nil?
+  puts "A username must be specified!"
+elsif password.nil?
+  puts "A password must be specified!"
+else
+  begin
+    run(username, password, time.to_i)
+  rescue
+    puts "Invalid credentials!"
+  end
+end
+
+

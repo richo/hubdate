@@ -15,20 +15,22 @@ require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "connectio
 require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "storage"))
 require File.expand_path(File.join(File.dirname(__FILE__), "hubdate", "checker"))
 
-if !Storage.dir_initialized?(File.join(Dir.home, ".hubdate"))
-  Storage.generate_files
-else
-  Storage.generate_follow if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "followers.yaml"))
-  Storage.generate_star if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "stargazers.yaml"))
-  Storage.generate_watch if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "watchers.yaml"))
-end
+def run(user, password, time)
+  if !Storage.dir_initialized?(File.join(Dir.home, ".hubdate"))
+    Storage.generate_files
+  else
+    Storage.generate_follow if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "followers.yaml"))
+    Storage.generate_star if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "stargazers.yaml"))
+    Storage.generate_watch if !Storage.file_initialized?(File.join(Dir.home, ".hubdate", "watchers.yaml"))
+  end
 
-connection = Github::Connection.new({:user => "tommyschaefer", :pass => "43v364591226"})
+  connection = Github::Connection.new({:user => user, :pass => password})
 
-loop do
-  Checker.check_notifications(connection)
-  Checker.check_followers(connection)
-  Checker.check_watchers(:stargazer, connection)
-  Checker.check_watchers(:watcher, connection)
-  sleep 10
+  loop do
+    Checker.check_notifications(connection)
+    Checker.check_followers(connection)
+    Checker.check_watchers(:stargazer, connection)
+    Checker.check_watchers(:watcher, connection)
+    sleep time
+  end
 end
